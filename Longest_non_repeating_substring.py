@@ -1,28 +1,24 @@
-s="vdvf"
-dict = {}
-res = []
-count = 0
-if len(s) == 1:
-    print("1")
+#O(n) solution to longest substring without repeating character.
 
-for i in range(0, len(s)):
 
-    j = i
+#Steps:
+# Store each character (i) in a queue if its not already present.
+#if its present,update the result if its lesser than the length of the queue ,then delete all those characters in front of (i)
+# including the repeated character, store (i) in tail of array.
+#continue the same procedure.
 
-    while j < len(s) and s[j] not in dict:
-        dict[s[j]] = 0
-        j += 1
 
-    if j == len(s):
-        j -= 1
-        res.append(j - i + 1)
-        print(max(res))
 
-    j -= 1
-    res.append(j - i + 1)
-    dict = {}
+s="dvdfgkg"
+arr=[]
+res=0
+for i in s:
+    if i in arr:
+        if len(arr)>res:
+            res=len(arr)
+        arr=arr[arr.index(i)+1:]
+        arr.append(i)
+    else:
+        arr.append(i)
 
-if len(res) == 0:
-    print("0")
-
-print( max(res))
+print(max(len(arr),res))
