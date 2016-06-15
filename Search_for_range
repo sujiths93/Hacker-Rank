@@ -1,0 +1,45 @@
+class Solution {
+public:
+
+	int leftindex(vector<int>& nums, int target) {
+		int low = 0;
+		int high = nums.size() - 1;
+		int mid = 0;
+		while (low < high) {
+			mid = (low + high) / 2;
+			if (nums.at(mid) < target)
+				low = mid+1;
+			else
+				high = mid;
+		}
+		return low;
+	}
+	int rightindex(vector<int>&nums, int target) {
+		int low = 0;
+		int high = nums.size() - 1;
+		int mid = (low + high) / 2;
+		int ans = low;
+		while (low <= high) {
+			mid = (low + high) / 2;
+
+			if (nums.at(mid) <= target) {
+				ans = mid;
+				low = mid + 1;
+			}
+			else {
+				high = mid-1;
+			}
+		}
+		return ans;
+	} 
+	vector<int> searchRange(vector<int>& nums, int target) {
+		int low = leftindex(nums, target);
+		int high = rightindex(nums, target);
+		if (nums[low] != target) {
+			return vector<int>{-1, -1};
+		}
+		else {
+			return vector<int>{low, high};
+		}
+	}
+};
