@@ -1,0 +1,29 @@
+class Solution {
+public:
+	int removeDuplicates(vector<int>& nums) {
+		unordered_map<int, int> map;
+		int a = nums.size();
+		int count = 0;
+		if (nums.size() == 0)
+			return 0;
+		for (auto it = nums.begin(); it != nums.end();) {
+			if (map.find(*it) == map.end()) {
+				map[*it] = 1;
+				++count;
+				++it;
+			}
+			else
+				if (map[*it] == 2)
+				{
+					it=nums.erase(nums.begin()+count);
+				}
+				else {
+					map[*it] += 1;
+					++count;
+					++it;
+				}
+
+		}
+		return count;
+	}
+};
