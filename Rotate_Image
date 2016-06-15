@@ -1,0 +1,18 @@
+class Solution {
+public:
+    void rotate(vector<vector<int>>& matrix) {
+    
+    vector<vector<int>> newvect;
+    vector<int> vec;
+
+	for (int i = 0; i < matrix[0].size(); i++) {
+		vec.clear();
+		for (int j = matrix.size()-1; j>=0; j--) {
+			vec.push_back(matrix[j][i]);
+		}
+		newvect.push_back(vec);
+	}
+	matrix=newvect;
+	
+    }
+};
