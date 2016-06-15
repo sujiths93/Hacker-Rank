@@ -1,0 +1,30 @@
+struct element {
+	int row;
+	int col;
+	element(int r, int c) :row(r), col(c) {}
+};
+class Solution{
+ public:
+	 void setZeroes(vector<vector<int>>& matrix) {
+		 vector<element> vec;
+		 for (auto i = 0; i <= matrix.size() - 1; ++i) {
+			 for (auto j = 0; j <= matrix[0].size() - 1; ++j) {
+				 if (matrix[i][j] == 0)
+				 {
+					 vec.push_back(element(i, j));
+				 }
+			 }
+		 }
+
+		 for (auto i:vec)
+		 {
+			 for (int m = 0; m <= matrix[0].size() - 1; m++) {
+				 matrix[i.row][m] = 0;
+			 }
+			 for (int n = 0; n <= matrix.size()-1; n++) {
+				 matrix[n][i.col] = 0;
+			 }
+		 }
+	 }
+
+ };
