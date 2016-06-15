@@ -1,0 +1,23 @@
+class Solution {
+public:
+    void sortColors(vector<int>& nums) {
+        vector<int> blue;
+        vector<int> white;
+        vector<int> result;
+        for(auto i:nums){
+            if(i==0)
+            result.push_back(i);
+            if(i==1)
+            white.push_back(i);
+            if(i==2)
+            blue.push_back(i);
+        }
+        for(auto i:white){
+            result.push_back(i);
+        }
+        for(auto i:blue){
+            result.push_back(i);
+        }
+        nums=result;
+    }
+};
