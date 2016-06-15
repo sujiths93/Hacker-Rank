@@ -1,0 +1,68 @@
+class Solution {
+public:
+	int firstMissingPositive(vector<int>& nums) {
+		//find the smallest and the largest numbers
+
+		
+
+
+		int s, l;
+		s = l = 0;
+		int c = 0;
+
+		vector<int> dict;
+		for (auto it = nums.begin(); it != nums.end(); ++it)
+		{
+			if (*it > 0)
+			{
+				s = l = *it;
+				break;
+			}
+
+		}
+		if ((nums.size() == 0) || (nums.size() == 1 && nums.at(0) == 0))
+			return 1;
+
+		if (nums.size() == 1) 
+			if(nums.at(0) > 1)
+				return 1;
+			else
+				return nums.at(0) + 1;
+		
+
+		for (auto it = nums.begin(); it != nums.end(); ++it) {
+			if (*it<0 || *it == 0)
+				continue;
+			if (*it <= s && *it>0) 
+				s = *it;
+			else if (*it >= l)
+				l = *it;
+			if(std::find(dict.begin(),dict.end(),*it)==dict.end())
+				dict.push_back(*it);
+		}
+		
+		if (s > 1)
+			return 1;
+		
+		if (s == l && s - 1 > 0)
+			return s - 1;
+		else if (s == l && s - 1 <= 0)
+			return s + 1;
+		
+		int count = 0;
+ 		for (int i = s; i <= l; i++) {
+			if(std::count(dict.begin(), dict.end(), i)==0)
+				return i;
+			++count;
+		}
+		if (count == dict.size()) {
+			if ((s - 1)>0)
+				return 1;
+			else
+				return (l + 1);
+		}
+		return s;
+
+
+	}
+};
