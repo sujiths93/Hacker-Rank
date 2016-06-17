@@ -1,0 +1,46 @@
+/**
+ * Definition for an interval.
+ * struct Interval {
+ *     int start;
+ *     int end;
+ *     Interval() : start(0), end(0) {}
+ *     Interval(int s, int e) : start(s), end(e) {}
+ * };
+ */
+ bool customsort(Interval const& lhs, Interval const& rhs) {
+	if (lhs.start == rhs.start)	return lhs.end < rhs.end;
+
+	return lhs.start < rhs.start;
+}
+class Solution {
+public:
+	vector<Interval> insert(vector<Interval>& intervals, Interval newInterval) {
+
+		int i;
+		vector<Interval> result;
+		//sorting out the elements.
+		intervals.push_back(Interval(newInterval.start, newInterval.end));
+		sort(intervals.begin(), intervals.end(), &customsort);
+	
+		for (int i = 0; i < intervals.size();)
+		{
+			//if no elements are in the result.
+			if (result.size()==0)
+			{
+				result.push_back(Interval(intervals[i].start, intervals[i].end));
+				++i;
+			}
+		
+			else if (intervals[i].start <= result[result.size()-1].end) {
+				result[result.size()-1].start = intervals[i].start < result[result.size()-1].start ? intervals[i].start : result[result.size() - 1].start;
+				result[result.size()-1].end=intervals[i].end < result[result.size() - 1].end ? result[result.size() - 1].end : intervals[i].end;
+				++i;
+			}
+			else {
+				result.push_back(Interval(intervals[i].start, intervals[i].end));
+			}
+		}
+		return result;
+
+	}
+};
