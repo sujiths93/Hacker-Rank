@@ -1,0 +1,21 @@
+class Solution {
+public:
+	bool valid(TreeNode *cur,long long int min,long long int max) {
+		if (cur == NULL)
+			return 1;
+
+		if (cur->val > min && cur->val < max)
+		{
+	        return (valid(cur->left,min,cur->val) && valid(cur->right,cur->val,max)) ;		
+		}
+		else
+		    return 0;
+	}
+	bool isValidBST(TreeNode* root) {		
+		if(!valid(root,(long long int) INT_MIN-1,(long long int) INT_MAX+1))
+		    return 0;
+		
+		return 1;
+		
+	}
+};
