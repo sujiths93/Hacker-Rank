@@ -1,0 +1,30 @@
+class Solution {
+
+public:
+	int arr[30] = {};
+	
+	Solution() {
+		arr[0] = 1;
+		arr[1] = 1;
+	}
+
+	int calc(int i) {
+
+		int s = 0;
+		if (arr[i] != 0)
+			return arr[i];
+		if (i == 1||i==0)
+			return arr[1];
+		for(int j=1;j<=i;j++)
+			s += calc(j-1)*calc(i-j);
+		return arr[i]=s;
+	}
+	int numTrees(int n) {
+		int res=0;
+		for (int i = 1; i <= n; i++)
+		{
+			res += calc(i-1)*calc(n-i);
+		}
+		return res;
+	}
+};
