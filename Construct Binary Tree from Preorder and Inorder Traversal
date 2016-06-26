@@ -1,0 +1,59 @@
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
+ * };
+ */
+class Solution {
+public:
+	TreeNode* construct(TreeNode* root,int i, vector<int> preorder,vector<int>&inorder) {
+		if (!inorder.size())
+			return NULL;
+		if (!root)
+			root = new TreeNode(preorder[i]);
+	
+		int pos = std::find(inorder.begin(), inorder.end(), preorder[i]) - inorder.begin();
+		vector<int> left;
+		vector<int> right;
+	
+		for (auto l = 0; l<pos ;l++) {
+			left.push_back(inorder[l]);
+		}
+		for (auto l = pos+1; l<inorder.size(); l++) {
+			right.push_back(inorder[l]);
+		}
+	
+		root->left = construct(root->left, i+1,preorder, left);
+		if (root->left)
+			++i;
+		root->right = construct(root->right, i+1, preorder, right);
+		
+		return root;
+	}
+	
+	TreeNode* buildTree(vector<int>& preorder, vector<int>& inorder) {
+		auto pos = std::find(inorder.begin(), inorder.end(), preorder[0]) - inorder.begin();
+		TreeNode* root = NULL;
+		vector<int> left;
+		vector<int> right;
+		if(!preorder.size())
+		    return NULL;
+		for (int i = 0; i <= pos; i++) {
+			left.push_back(inorder[i]);
+		}
+		for (int i = pos + 1; i != inorder.size(); i++) {
+			right.push_back(inorder[i]);
+		}
+		int i=0;
+		root= construct(root,i,preorder,left);
+				
+		for (auto i : left) {
+			preorder.erase(std::remove(preorder.begin(), preorder.end(), i), preorder.end());
+		}
+		root->right = construct(root->right, i,preorder, right);
+		return root;
+	}
+};
