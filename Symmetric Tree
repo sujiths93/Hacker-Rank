@@ -1,0 +1,53 @@
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
+ * };
+ */
+class Solution {
+public:
+    
+    void preorder(TreeNode *root,vector<int> &v){
+        if(root==NULL)
+        {
+            v.push_back(NULL);
+            return;
+        }
+        v.push_back(root->val);
+        preorder(root->left,v);
+        preorder(root->right,v);        
+    }
+    void myorder(TreeNode *root,vector<int> &v){
+        if(root==NULL)
+        {
+            v.push_back(NULL);
+            return;
+        }
+            
+        v.push_back(root->val);
+        myorder(root->right,v);
+        myorder(root->left,v);
+     
+    }
+    bool isSymmetric(TreeNode* root) {
+        if(root==NULL)
+            return 1;
+        vector<int> vec;
+        vector<int> v;
+        
+        myorder(root->left,v);
+        preorder(root->right,vec);
+        
+     
+            
+        if(v.size()!=vec.size())
+            return 0;
+        if(v!=vec)
+            return 0;
+        return 1;
+        
+    }
+};
