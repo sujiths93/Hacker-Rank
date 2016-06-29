@@ -1,0 +1,24 @@
+class Solution {
+public:
+    vector<int> getRow(int rowIndex) {
+        vector<int> oldv;     
+        oldv={1};      
+        
+        if(rowIndex==0)
+            return oldv;
+        
+        oldv={1,1};
+        vector<int> result;
+        result=oldv;
+        for(int i=1;i<rowIndex;i++){
+            result.clear();
+            result.push_back(1);
+            for(int i=0;i!=oldv.size()-1;i++){
+                result.push_back(oldv[i]+oldv[i+1]);
+            }
+            result.push_back(1);
+            oldv=result;
+        }
+        return result;          
+    }
+};
