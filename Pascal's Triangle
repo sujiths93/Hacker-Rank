@@ -1,0 +1,35 @@
+class Solution {
+public:
+    vector<vector<int>> generate(int numRows) {
+        vector<vector<int>> result;
+        
+        if(numRows==0)
+            return result;
+            
+        vector<int> oldv;
+        oldv={1};
+        result.push_back(oldv);
+        
+        if(numRows==1)
+            return result;
+        
+        oldv={1,1};
+        vector<int> newv;
+        result.push_back(oldv);
+        for(int i=1;i<numRows-1;i++){
+            newv.clear();
+            newv.push_back(1);
+            for(int i=0;i!=oldv.size()-1;i++){
+                newv.push_back(oldv[i]+oldv[i+1]);
+            }
+            newv.push_back(1);
+            oldv=newv;
+            result.push_back(oldv);    
+        }
+        
+        return result;
+        
+        
+            
+    }
+};
