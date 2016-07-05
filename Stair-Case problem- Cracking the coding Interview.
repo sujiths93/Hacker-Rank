@@ -1,0 +1,22 @@
+#include "stdafx.h"
+#include "iostream"
+using namespace std;
+
+class Solution{
+public:
+	int count(int n) {
+		if (n<0)
+			return 0;
+		if (!n)
+			return 1;
+
+		return count(n - 1)+count(n - 2)+count(n - 3);
+	}
+};
+int main()
+{
+	Solution s;
+	cout<<s.count(5);
+    return 0;
+}
+    
