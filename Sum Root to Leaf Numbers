@@ -1,0 +1,25 @@
+class Solution {
+public:
+	int sums=0;
+
+	void sum(TreeNode* root, string st) {
+		if (!root)
+			return;
+		st += '0' + (root->val);
+		
+		if (!root->left && !root->right) {
+			sums+=stoi(st);
+			return;
+		}
+		
+		if(root->left)
+			sum(root->left, st);
+		if(root->right)
+			sum(root->right, st);
+	}
+	int sumNumbers(TreeNode* root) {
+		string st = "";
+	    sum(root, st);
+		return sums;
+	}
+};
