@@ -1,0 +1,35 @@
+struct place {
+	int row, col, right_diag, left_diag;
+	place():row(0), col(0), right_diag(0), left_diag(0) {}
+	place(int row, int col): row(row), col(col), right_diag(row - col), left_diag(row + col) {}
+};
+class Solution {
+public:
+	int queen(int &count,int row,int n, vector<place>& vec) {
+		if (row == n)
+		{
+		    count++;
+		    return count;
+		}
+		
+		for (int col = 0; col < n; col++) {
+			int flag = 1;
+			for (int i = 0; i < row; i++) {
+				if (vec[i].row == row || vec[i].col == col || vec[i].right_diag == (row - col) || vec[i].left_diag == (row + col)) {
+					flag = 0;
+					break;
+				}
+			}
+			if (flag) {
+				vec[row]=place(row, col);
+				queen(count, row + 1, n, vec);
+			}
+		}
+		return count;
+	}
+    int  totalNQueens(int n) {
+		vector<place> vec(n);
+		int count=0;
+		return queen(count, 0,n, vec);
+	}
+};
