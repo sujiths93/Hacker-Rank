@@ -1,0 +1,47 @@
+struct place {
+	int row, col, right_diag, left_diag;
+	place():row(0), col(0), right_diag(0), left_diag(0) {}
+	place(int row, int col): row(row), col(col), right_diag(row - col), left_diag(row + col) {}
+};
+class Solution {
+public:
+	void queen(vector<vector<string>>& res,int row,int n, vector<place>& vec) {
+		if (row == n)
+		{
+			vector<string> r;
+			string str = "";
+			for (int i = 0; i < n; i++) {
+				for (int j = 0; j < n; j++) {
+					if (j == vec[i].col)
+						str += "Q";
+					else
+						str += ".";
+				}
+				r.push_back(str);
+				str = "";
+			}
+			res.push_back(r);
+			return;
+		}
+		
+		for (int col = 0; col < n; col++) {
+			int flag = 1;
+			for (int i = 0; i < row; i++) {
+				if (vec[i].row == row || vec[i].col == col || vec[i].right_diag == (row - col) || vec[i].left_diag == (row + col)) {
+					flag = 0;
+					break;
+				}
+			}
+			if (flag) {
+				vec[row]=place(row, col);
+				queen(res, row + 1, n, vec);
+			}
+		}
+	}
+	vector<vector<string>> solveNQueens(int n) {
+		vector<vector<string>> res;
+		vector<place> vec(n);
+		queen(res, 0,n, vec);
+		return res;
+	}
+};
