@@ -1,0 +1,28 @@
+class Solution{
+public:
+	vector<vector<int>> result;
+	set<vector<int>> s;
+	void helper(int num, int target, vector<int>& candidates,int x,vector<int> res,int i) {
+		if (target<0)
+			return;
+		res.push_back(x);
+		if (!target) {
+			sort(res.begin(), res.end());
+			if (s.find(res) == s.end()) {
+				s.insert(res);
+				result.push_back(res);
+			}
+			return;
+		}
+		helper(num+x, target-x, candidates, x,res,i);
+		for (auto j = i+1; j < candidates.size();j++)
+				helper(num+candidates[j], target-candidates[j], candidates, candidates[j], res, j);
+	}
+	vector<vector<int>> combinationSum(vector<int>& candidates, int target) {
+		vector<int> res;
+		for (int i = 0; i < candidates.size(); i++) {
+			helper(candidates[i], target-candidates[i], candidates, candidates[i], res,i);
+		}
+		return result;
+	}
+};
