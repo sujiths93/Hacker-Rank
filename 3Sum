@@ -1,0 +1,25 @@
+class Solution {
+public:
+		vector<vector<int>> threeSum(vector<int>& nums) {
+			set<vector<int>> s;
+			vector<int> res;
+			vector<vector<int>> result;
+			sort(nums.begin(),nums.end());
+			for (int i = 0; i < nums.size(); i++) {
+				int sum = nums[i];
+				if (sum!= 0)
+					sum = -nums[i];
+				for (int j = i+1; j < nums.size(); j++) {
+					if (search(nums, sum - nums[j], i, j)) {
+						res = { -sum,nums[j],sum - nums[j] };
+						sort(res.begin(), res.end());
+						if (s.find(res) == s.end()) {
+							result.push_back(res);
+							s.insert(res);
+						}
+					}
+				}
+			}
+			return result;
+	}
+};
