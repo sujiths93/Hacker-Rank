@@ -1,0 +1,22 @@
+class Solution {
+public:
+	int s = INT_MAX;
+	int helper(int sum, vector<vector<int>> &grid, int i, int j, vector<vector<int>> &memoize) {
+		if (i >= grid.size() || j >= grid[0].size()) {
+			return sum;
+		}
+		if (sum + grid[i][j] < memoize[i][j])
+			memoize[i][j] = sum + grid[i][j];
+		else
+			return memoize[i][j];
+		if (i == grid.size() - 1 && j == grid[0].size() - 1) {
+			return s = min(s, sum + grid[i][j]);
+		}
+		
+return min(helper(sum + grid[i][j], grid, i + 1, j,memoize) + helper(sum + grid[i][j], grid, i, j + 1,memoize), s);
+	}
+	int minPathSum(vector<vector<int>>& grid) {
+		vector<vector<int>> memoize(grid.size(), vector<int>(grid[0].size(), INT_MAX));
+		return helper(0, grid, 0, 0,memoize);
+	}
+};
