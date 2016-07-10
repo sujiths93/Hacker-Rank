@@ -1,0 +1,33 @@
+class Solution {
+public:
+	string permutation(string &s, int start, int end) {
+		do {
+			if (end == start)
+				return s;
+			++start;
+		} while (std::next_permutation(s.begin(), s.end()));
+		return s;
+	}
+
+	string getPermutation(int n, int k) {
+		string s = "";
+
+		double a = tgamma(n + 1) / n;
+		float n1, fractpart,inte;
+		n1 = k / a;
+		fractpart = modf(n1, &inte);
+		if (fractpart > 0)
+			inte+= 1;
+
+		n1 = inte;
+		int n2 = n1;
+		int start = (n2 - 1)*a;
+		s = to_string(n2);
+		for (int i = 1; i <= n; i++) {
+			if(to_string(n2)!=to_string(i))
+				s += std::to_string(i);
+		}
+
+		return permutation(s, start+1, k);
+	}
+};
