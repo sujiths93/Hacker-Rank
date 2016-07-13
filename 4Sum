@@ -21,7 +21,7 @@ public:
 					int d = nums[high];
 					if (a + b + c + d == target) {
 						res.push_back(vector<int> {a, b, c, d});
-						while (low < nums.size() && nums[low] == c)
+						while (low < nums.size() && nums[low] == c) 
 							low++;
 						while (high >= 0 && nums[high] == d)
 							--high;
