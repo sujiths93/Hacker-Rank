@@ -1,0 +1,49 @@
+/**
+ * Definition for singly-linked list with a random pointer.
+ * struct RandomListNode {
+ *     int label;
+ *     RandomListNode *next, *random;
+ *     RandomListNode(int x) : label(x), next(NULL), random(NULL) {}
+ * };
+ */
+class Solution {
+public:
+
+	unordered_map<RandomListNode*, RandomListNode*> dict;
+	RandomListNode* copyRandomList(RandomListNode *head) {
+	    	
+	    if(!head)
+	        return NULL;
+	        
+		RandomListNode* cur = head;
+		RandomListNode* ncur,*nhead = NULL;
+		
+		nhead = new RandomListNode(head->label);
+		dict[cur] = nhead;
+		ncur = nhead;
+		
+		while (cur) {
+			if (cur->random) {
+				if (dict.find(cur->random) == dict.end()) {
+					ncur->random = new RandomListNode(cur->random->label);
+					dict[cur->random] = ncur->random;
+				}
+
+				else
+					ncur->random = dict[cur->random];
+			}
+			if (cur->next) {
+				if (dict.find(cur->next) == dict.end()) {
+					ncur->next = new RandomListNode(cur->next->label);
+					dict[cur->next] = ncur->next;
+				}
+				else
+					ncur->next = dict[cur->next];
+			}
+			ncur = ncur->next;
+			cur = cur->next;
+		}
+
+		return nhead;
+	}
+};
