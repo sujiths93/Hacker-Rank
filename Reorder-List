@@ -1,0 +1,42 @@
+class Solution {
+public:
+	void reorderList(ListNode* head) {
+		vector<ListNode*> stack;
+		ListNode* mid = NULL;
+		ListNode* cur = NULL;
+		if (!head||!head->next||!head->next->next)
+			return;
+
+		//to find the middle element.
+		cur = head;
+		mid = head;
+
+		while (cur->next) {
+			if(cur->next)
+				cur = cur->next;
+			if (cur->next)
+				cur = cur->next;
+			else
+				break;
+
+			mid = mid->next;
+		}
+
+		while (mid->next) {
+			stack.push_back(mid->next);
+			mid = mid->next;
+		}
+
+		cur = head;
+		while (stack.size()) {
+			stack[stack.size() - 1]->next = cur->next;
+			cur->next = stack[stack.size()-1];
+			cur=cur->next;
+			if (cur->next)
+				cur = cur->next;
+			stack.pop_back();
+		}
+
+		cur->next = NULL;
+	}
+};
