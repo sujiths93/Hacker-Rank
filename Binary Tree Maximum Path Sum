@@ -1,0 +1,17 @@
+class Solution {
+public:
+	int maximum = INT_MIN;
+	int recurse(TreeNode*root) {
+		if (!root)
+			return 0;
+		int lmax = max(0,recurse(root->left));
+		int rmax = max(0,recurse(root->right));
+		maximum = max(maximum, lmax + rmax + root->val);
+		return max(max(0, max(lmax, rmax)) + root->val, 0);
+
+	}
+	int maxPathSum(TreeNode* root) {
+		int x=recurse(root);
+		return maximum;
+	}
+};
