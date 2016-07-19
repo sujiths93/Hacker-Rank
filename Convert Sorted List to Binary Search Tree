@@ -1,0 +1,80 @@
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     ListNode *next;
+ *     ListNode(int x) : val(x), next(NULL) {}
+ * };
+ */
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
+ * };
+ */
+class Solution {
+public:
+
+/*since there are no array indices this function is used to calculate the middle node given begin and end nodes.
+You might see a lot of IF statements in here, how did I get it ?, it's pure trial and error.
+*/
+
+/*The Basic idea to calculate the middle node of a linked list is that, have a fast pointer and a slow pointer, start from the beginning, advance fast pointer by 2 nodes then advance slow pointer by 1 node as you can see in the below function.At the end the slow pointer is the one pointing to middle node.
+*/
+	ListNode* middle(ListNode* begin,ListNode* end) {
+		ListNode* n1=begin, *n2=begin; // n1- slow pointer, n2-fast pointer.
+		while(n2!=end) {
+			n2 = n2->next;
+			if (n2 == end)
+				return n1;
+			if (n2->next)//checking for NULL case.
+				n2 = n2->next;
+			else
+				break;
+			n1 = n1->next;
+		}
+		return n1; // return the middle node
+	}
+	
+	/*This function is pretty easy to understand ,during each recursive call we need to send beginning node until mid-1 to construct the left subtree to do so, I advance a pointer until my next node is not the middle node and finally returen the node.*/
+	  
+	ListNode* mid_minus_one(ListNode* begin, ListNode*end) {
+		if (begin == end)
+			return NULL;
+		ListNode* n = begin;
+		while (n->next != end)
+			n = n->next;
+		return n;
+	}
+	
+/*Finally here comes the main recursive function, where I construct the left and right subtree recursively*/
+	TreeNode* construct(ListNode* begin, ListNode* end) {
+		TreeNode* root = NULL;
+		if (!begin || !end)
+			return root;
+		if (begin == end)
+		{
+			root = new TreeNode(begin->val);
+			return root;
+		}
+		ListNode* mid = middle(begin,end);
+		root = new TreeNode(mid->val);
+		root->left = construct(begin, mid_minus_one(begin, mid));//left subtree, I pass begin,mid-1
+		root->right = construct(mid->next, end);//right subtree, I pass mid+1 and end.
+		return root;
+	}
+	
+	TreeNode* sortedListToBST(ListNode* head) {
+	    if(!head)
+	      return NULL;
+		ListNode* end= head;
+		while (end -> next)
+			end = end->next;
+			
+		return construct(head, end);
+	}
+	
+};
