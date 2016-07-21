@@ -1,0 +1,21 @@
+class Solution {
+public:
+	int sum = INT_MAX;
+	
+	void recurse(int i, int j, vector<vector<int>>& triangle,int s,vector<vector<int>>& memo) {
+
+		if (i < triangle.size() && j < triangle[i].size()) {
+
+			recurse(i + 1, j, triangle, s + triangle[i][j],memo);
+			recurse(i + 1, j + 1, triangle, s + triangle[i][j],memo);
+		}
+		else 
+			if (s < sum)
+				sum= s;
+	}
+	int minimumTotal(vector<vector<int>>& triangle) {
+		vector<vector<int>> memo(triangle.size(), vector<int>(triangle[triangle.size() - 1].size(), INT_MAX));
+		recurse(0, 0, triangle, 0,memo);
+		return sum;
+	}
+};
