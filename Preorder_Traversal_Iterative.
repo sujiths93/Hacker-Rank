@@ -1,0 +1,59 @@
+class Solution {
+public:
+	vector<int> result;
+	vector<int> preorderTraversal(TreeNode* root) {
+	    if(!root)
+	        return result;
+		set<TreeNode*> explored;
+		vector<TreeNode*> res;
+		res.push_back(root);
+		result.push_back(root->val);
+		TreeNode* node = root;
+		while (res.size()) {
+			while (node->left){
+				if (explored.find(node->left) == explored.end()) {
+					node = node->left;
+					result.push_back(node->val);
+					res.push_back(node);
+					explored.insert(node);
+				}
+				else break;
+		    }
+
+			if (node->right) {
+				if (explored.find(node->right) == explored.end()) {
+					node = node->right;
+					res.push_back(node);
+					result.push_back(node->val);
+					explored.insert(node);
+				}
+			}
+
+			if (!node->left && !node->right)
+				res.pop_back();
+
+			else if (node->left || node->right) {
+				int c = 0;
+				if (node->left) {
+					if (explored.find(node->left) != explored.end())
+						c++;
+				}
+				else 
+					c++;
+				if (node->right) {
+					if (explored.find(node->right) != explored.end())
+						c++;
+				}
+				else
+					c++;
+				if (c == 2)
+					res.pop_back();
+
+			}
+			if(res.size())
+				node = res[res.size() - 1];
+			
+		}
+		return result;
+	}
+};
