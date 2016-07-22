@@ -1,43 +1,17 @@
 class Solution {
 public:
+	int maxindex=0;
 	bool canJump(vector<int>& nums) {
-		int len = nums.size() - 1;
-		if (nums.size() == 1) return 1;
-		if (nums[0] == 0)  return 0;
-		vector<int> visited;
-		int flag;
-		auto i = 0;
-		for (i=0;i<=len-1 ;) {
-
-			if (find(visited.begin(), visited.end(), i) != visited.end())
-				return 0;
-
-			visited.push_back(i);
-			i += nums[i];
-			if (i >= len)
-				return 1;
-			if (nums[i] == 0)
-			{
-				if (find(visited.begin(), visited.end(), i) == visited.end())
-					visited.push_back(i);
-
-				while (i >= 0) {
-					if (find(visited.begin(), visited.end(), i) != visited.end())
-					{
-						--i;
-					}
-					else
-						break;
-
-				}
-			}
-			if (i < 0)
-				return 0;
-		}
-		if (i == len - 2)
-			return 0;
-		else
-			return 1;
-
+        if(nums.size()==1||!nums.size())
+            return 1;
+            
+        for(int i=0;i<=maxindex;i++){
+            if(nums[i]+i>maxindex){
+                if(nums[i]+i>=nums.size()-1)
+                    return 1;
+                maxindex=nums[i]+i;
+            }
+        }
+        return 0;
 	}
 };
