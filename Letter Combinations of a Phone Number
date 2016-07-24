@@ -1,0 +1,33 @@
+class Solution {
+public:
+	vector<string> s;
+	void recurse(string digits, unordered_map<char, vector<char>> maps, int digit, int letter, string st) {
+		if (st.length() == digits.length()) {
+			s.push_back(st);
+			return;
+		}
+		if (digit > digits.size())
+			return;
+		if (letter > maps[digits[digit]].size())
+			return;
+
+		for(int i=0;i<maps[digits[digit]].size();i++)
+				recurse(digits, maps, digit+1, i, st + char(maps[digits[digit]][i]));
+	}
+	vector<string> letterCombinations(string digits) {
+	    if(!digits.length())
+	        return s;
+		unordered_map<char, vector<char>> maps;
+		maps['2'] = vector<char>{ 'a','b','c' };
+		maps['3'] = vector<char>{ 'd','e','f' };
+		maps['4'] = vector<char>{ 'g','h','i' };
+		maps['5'] = vector<char>{ 'j','k','l' };
+		maps['6'] = vector<char>{ 'm','n','o' };
+		maps['7'] = vector<char>{ 'p','q','r','s' };
+		maps['8'] = vector<char>{ 't','u','v' };
+		maps['9'] = vector<char>{ 'w','x','y','z' };
+		
+		recurse(digits, maps, 0, 0, "");
+		return s;
+	}
+};
