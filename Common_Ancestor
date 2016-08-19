@@ -1,0 +1,75 @@
+// Common_ancestor.cpp : Defines the entry point for the console application.
+//
+
+#include "stdafx.h"
+#include "iostream"
+using namespace std;
+struct bt {
+	int val;
+	bt *link[2];
+	bt(int x) {
+		val = x;
+		link[0] = NULL;
+		link[1] = NULL;
+	}
+};
+class Solution {
+public:
+	int find(bt* root, bt *p) {
+		if (root == p)
+			return 1;
+		bool l = 0, r = 0;
+		if(root->link[0])
+			l = find(root->link[0], p);
+		
+		if(root->link[1])
+			r = find(root->link[1], p);
+		return l | r;
+	}
+	bt* common_ancestor(bt* root, bt* p, bt* q) {
+		if (root->link[0] == p || root->link[1] == q || root->link[1] == p || root->link[0] == q)
+			return root;
+
+		bt* lt = NULL, *rt = NULL;
+
+		if (root->link[0])
+			lt = common_ancestor(root->link[0], p, q);
+		if (root->link[1])
+			rt = common_ancestor(root->link[1], p, q);
+		
+		if (lt && rt)
+			return root;
+
+		else if (lt || rt) {
+			if (lt)
+				return lt;
+			else
+				return rt;
+		}
+		return NULL;
+	}
+};
+
+int main()
+{
+	bt* root = new bt(5);
+	root->link[0] = new bt(10);
+	root->link[0]->link[0] = new bt(20);
+	root->link[0]->link[1] = new bt(25);
+	root->link[0]->link[1]->link[1] = new bt(35);
+	root->link[0]->link[0]->link[0] = new bt(30);
+	root->link[1] = new bt(15);
+	root->link[1]->link[1] = new bt(40);
+	root->link[1]->link[1]->link[0] = new bt(50);
+	root->link[1]->link[1]->link[1] = new bt(60);
+	Solution s;
+	bt* node1 = NULL,*node2=NULL;
+	node1 = root->link[0]->link[0]->link[0]; //30
+	node2 = root->link[1]->link[1]->link[1]; // 60
+	if (s.find(root, node1) && s.find(root, node2))
+		cout << s.common_ancestor(root, node1, node2)->val;
+	else
+		cout << "No Ancestor Exists";
+	return 0;
+}
+
