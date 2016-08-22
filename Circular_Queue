@@ -1,0 +1,44 @@
+#include "stdafx.h"
+#include "vector"
+#include "iostream"
+using namespace std;
+class queue {
+public:
+	vector<int> arr;
+	int cur;
+	int size;
+	
+	queue(int s) {
+		cur = 0;
+		size = s;
+		vector<int> temp(size, 0);
+		arr = temp;
+	}
+
+	void enqueue(int val) {
+		if (cur == size) {
+			cur = cur%size;
+		}
+		arr[cur++] = val;
+	}
+
+	int dequeue() {
+		int x;
+		if (!cur) {
+			cout << "ARRAY EMPTY";
+			return 0;
+		}
+		else {
+			x = arr[0];
+			for (int i = 0; i < cur ; i++)
+				arr[i] = arr[i+1];
+			cur--;
+		}
+		return x;
+	}
+
+	void print() {
+		for (int i = 0; i <= sizeof(arr) / sizeof(arr[0]); i++)
+			cout << arr[i] << " ";
+	}
+};
