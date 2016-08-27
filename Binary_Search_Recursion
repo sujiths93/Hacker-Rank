@@ -1,0 +1,41 @@
+// Find_the_missing_number.cpp : Defines the entry point for the console application.
+//
+/*
+Recursion for binary search.
+*/
+
+#include "stdafx.h"
+#include "iostream"
+#include "vector"
+using namespace std;
+class Solution {
+	public:
+		int flag = 0;
+		void binary_search(int beg, int end,vector<int>& v,int& ele) {
+			if (flag)
+				return;
+			int mid = (beg + end) / 2;
+			if (v[mid] == ele) {
+				flag = 1;
+				return;
+			}
+			if (v[mid] < ele)
+				binary_search(mid + 1, end, v, ele);
+			else
+				binary_search(beg, mid, v, ele);
+				
+		}
+};
+int main()
+{
+	Solution s;
+	vector<int> v = { 1,2,3,4,5,6,7,8,9,10 };
+	int ele = 8;
+	s.binary_search(0, v.size() - 1, v, ele);
+	if (s.flag)
+		cout << "FOUND";
+	else
+		cout << "NOT FOUND";
+    return 0;
+}
+
