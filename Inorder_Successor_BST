@@ -1,0 +1,30 @@
+#include "stdafx.h"
+#include "iostream"
+
+using namespace std;
+struct tree {
+	int value;
+	tree* left;
+	tree* right;
+	tree(int val) :value(val),left(NULL), right(NULL) {}
+};
+class Solution {
+public:
+	int successor(tree*root, tree*node,int min,int max) {
+		if (root == node)
+			return max;
+		if (node->value < root->value)
+			return successor(root->left, node, min, root->value);
+		return successor(root->right, node, root->value, max);
+	}
+	int find(tree* root, tree* node) { 
+		if (node->right) {
+			node = node->right;
+			while (node->left) {
+				node = node->left;
+			}
+			return node->value;
+		}
+		return successor(root, node, INT_MIN, INT_MAX);
+	}
+};
