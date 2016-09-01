@@ -1,0 +1,25 @@
+class Solution {
+public:
+	void swap(int &i, int &j) {
+		int temp = i;
+		i = j;
+		j = temp;
+	}
+	void swap_zeros(vector<int>& v) {
+		int j=0,i=0;
+		for (; i < v.size(); i++){
+			if (!v[i]) {
+				if (i + 1 < v.size()) {
+					if (!v[i + 1])
+						continue;
+					else {
+						swap(v[j], v[i + 1]);
+						j++;
+					}
+				}
+			}
+			else
+				j++;
+		}
+	}
+};
