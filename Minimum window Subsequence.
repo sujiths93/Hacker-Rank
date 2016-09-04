@@ -1,0 +1,45 @@
+// Smallest_Subsequence.cpp : Defines the entry point for the console application.
+//
+
+#include "stdafx.h"
+#include "iostream"
+#include "vector"
+#include "set"
+using namespace std;
+class Solution {
+public:
+	int find_subsequence(vector<int> s, vector<int> c, int arrayStart, int subArrayStart) {
+		if (arrayStart == s.size() || subArrayStart ==c.size())	return -1;
+		if (subArrayStart==c.size()-1) return arrayStart;
+
+		if (s[arrayStart + 1] == c[subArrayStart + 1])
+			return find_subsequence(s, c, arrayStart + 1, subArrayStart + 1);
+		else
+			return find_subsequence(s, c, arrayStart + 1, subArrayStart);
+	}
+};
+
+int main()
+{
+	vector<int> v = { 1,5,3,5,6,7,8,5,6,8,7,8,0,7 };
+	vector<int> c = { 5,6,8,7 };
+	Solution s;
+	int size = INT_MAX;
+	int j = -1;
+	for (int i = 0; i <v.size(); i++) {
+		if(v[i]==c[0]){
+			int x = s.find_subsequence(v, c, i-1, -1);
+			if (x > -1) {
+				if (x - i + 1 < size) {
+					size = x - i + 1;
+					j = i;
+				}
+				if (size == c.size())
+					break;
+			}
+		}
+	}
+	cout << size <<"  "<<j;
+    return 0;
+}
+
